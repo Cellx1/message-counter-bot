@@ -64,11 +64,16 @@ client.on('interactionCreate', async (interaction) => {
     return interaction.reply({ content: 'That user is not a member of this server.', ephemeral: true });
   }
 
-  await interaction.deferReply();
+     await interaction.deferReply();
 
   const joinedAt = `<t:${Math.floor(member.joinedTimestamp / 1000)}:R>`;
   const trackedCount = await getCount(interaction.guildId, member.id);
-  const scannedCount = await scanHistory(member, interaction.guild);
+  let scannedCount = 0;
+  try {
+    scannedCount = await scanHistory(member, interaction.guild);
+  } catch (err) {
+    console.error('Scan history failed:', err.message);
+  }
 
   const lines = [
     `**Joined:** ${joinedAt}`,
