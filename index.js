@@ -94,9 +94,9 @@ client.on('interactionCreate', async (interaction) => {
 (async () => {
   const rest = new REST().setToken(process.env.DISCORD_TOKEN);
   await rest.put(
-    Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
-    { body: [command.toJSON()] },
-  );
+  Routes.applicationCommands(process.env.CLIENT_ID),
+  { body: [command.toJSON()] },
+);
   console.log('Slash command registered!');
   await client.login(process.env.DISCORD_TOKEN);
 })();
